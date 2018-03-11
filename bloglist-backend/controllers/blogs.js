@@ -12,7 +12,8 @@ blogsRouter.get('/', async (request, response) => {
             title: blog.title,
             author: blog.author,
             url: blog.url,
-            user: blog.user
+            user: blog.user,
+            comments: blog.comments
         }
     })
     response.json(res)
@@ -43,6 +44,7 @@ blogsRouter.post('/', async (request, response) => {
     }
     user = new User(user[0])
     blog.user = user._id
+    blog.comments = []
     const blogResponse = await blog.save()
     user.blogs = user.blogs.concat(blogResponse._id)
     await user.save()

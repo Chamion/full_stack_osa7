@@ -2,7 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { like, remove } from '../reducers/blogReducer'
 import { showNotification } from '../reducers/notificationReducer'
-import { Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import CommentList from './CommentList'
+import CommentForm from './CommentForm'
 
 class BlogInfo extends React.Component {
     
@@ -23,7 +25,9 @@ class BlogInfo extends React.Component {
     render() {
         if(this.props.blog === undefined) {
             return (
-                <Redirect to='/' />
+                <div>
+                    <Link to='/'>back to blog list</Link>
+                </div>
             )
         }
         var deleteButton
@@ -50,6 +54,9 @@ class BlogInfo extends React.Component {
                 <p><a href={this.props.blog.url}>{this.props.blog.url}</a></p>
                 <p>{this.props.blog.likes} likes <button onClick={() => this.likeBlog()}>like</button></p>
                 {deleteButton}
+                <h2>comments</h2>
+                <CommentForm id={this.props.blog._id} title={this.props.blog.title} />
+                <CommentList comments={this.props.blog.comments} />
             </div>
         )
     }

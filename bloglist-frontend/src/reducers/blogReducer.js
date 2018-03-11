@@ -20,6 +20,12 @@ const reducer = (store = [], action) => {
     if(action.type === 'LOGIN') {
         blogService.setToken(action.user.token)
     }
+    if(action.type === 'COMMENT') {
+        const commented = store.find(b=>b._id===action.id)
+        const updated = { ...commented, comments: commented.comments.concat(action.content) }
+        blogService.update(action.id, updated)
+        return store.map(b => b._id === action.id ? updated : b)
+    }
     return store
 }
 
@@ -50,6 +56,14 @@ export const add = (blog) => async (dispatch) => {
     dispatch({
         type: 'ADD',
         result
+    })
+}
+
+export const comment = (id, content) => (dispatch) => {
+    dispatch({
+        type: 'COMMENT',
+        id,
+        content
     })
 }
 
