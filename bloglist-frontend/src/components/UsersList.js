@@ -23,12 +23,12 @@ class UsersList extends React.Component {
         return (
             <Panel>
                 <Panel.Heading>
-                    <h2>Bloglist users</h2>
+                    <h2>Blogilistan käyttäjät</h2>
                 </Panel.Heading>
                 <Panel.Body>
                     <Row>
                         <Col sm={3}></Col>
-                        <Col sm={3}>blogs added</Col>
+                        <Col sm={3}>blogeja lisätty</Col>
                     </Row>
                     {this.state.users.map(user => {
                         return (

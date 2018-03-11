@@ -19,7 +19,7 @@ class CommentForm extends React.Component {
     handleSubmit = async (event) => {
         event.preventDefault()
         this.props.comment(this.props.id, this.state.comment)
-        await this.props.showNotification(`comment '${this.state.comment}' added to blog '${this.props.title}'`, 'info', 5)
+        await this.props.showNotification(`kommentti '${this.state.comment}' jätetty blogiin '${this.props.title}'`, 'info', 5)
         this.setState({
             comment: ''
         })
@@ -28,12 +28,12 @@ class CommentForm extends React.Component {
     render() {
         return (
             <div>
-                <h4>Leave a comment</h4>
+                <h4>Kommentoi</h4>
                 <Form onSubmit={this.handleSubmit.bind(this)}>
                     <FormGroup>
                         <textarea name='content' value={this.state.comment} onChange={this.handleChange.bind(this)} className='form-control'></textarea>
                     </FormGroup>
-                    <button type='submit' className='btn btn-default'>comment</button>
+                    <button type='submit' className='btn btn-default'>kommentoi</button>
                 </Form>
             </div>
         )

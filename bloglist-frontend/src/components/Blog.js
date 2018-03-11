@@ -8,7 +8,7 @@ class Blog extends React.Component {
       <tr>
         <td>
             <Link to={`/blogs/${this.props.blog._id}`}>
-              {this.props.blog.title} by {this.props.blog.author}
+              {this.props.blog.title} kirjoittajalta {this.props.blog.author}
             </Link>
         </td>
       </tr>

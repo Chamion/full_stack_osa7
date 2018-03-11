@@ -11,7 +11,7 @@ class BlogList extends React.Component {
         return (
             <Panel>
                 <Panel.Heading>
-                    <h2>blogs</h2>
+                    <h2>Blogit</h2>
                 </Panel.Heading>
                 <Panel.Body>
                     <Table hover>

@@ -30,7 +30,7 @@ class UserInfo extends React.Component {
                     <h2>{this.state.user.name}</h2>
                 </Panel.Heading>
                 <Panel.Body>
-                    <h3>Added blogs</h3>
+                    <h3>Lisätyt blogit</h3>
                     <Table bordered>
                         <tbody>
                             {this.state.user.blogs.map(blog => {
@@ -38,7 +38,7 @@ class UserInfo extends React.Component {
                                     <tr key={blog._id}>
                                         <td>
                                             <span>{blog.title}</span>
-                                            <span> by </span>
+                                            <span> kirjoittajalta </span>
                                             <span>{blog.author}</span>
                                         </td>
                                     </tr>

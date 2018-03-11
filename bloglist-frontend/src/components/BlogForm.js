@@ -13,7 +13,7 @@ const BlogForm = ({ title, author, url, handleChange, handleSubmit }) => {
                 <FormGroup>
                     <Col sm={1}>
                         <ControlLabel>
-                            title
+                            otsikko
                         </ControlLabel>
                     </Col>
                     <Col sm={11}>
@@ -27,7 +27,7 @@ const BlogForm = ({ title, author, url, handleChange, handleSubmit }) => {
                 <FormGroup>
                     <Col sm={1}>
                         <ControlLabel>
-                            author
+                            kirjoittaja
                         </ControlLabel>
                     </Col>
                     <Col sm={11}>
@@ -51,7 +51,7 @@ const BlogForm = ({ title, author, url, handleChange, handleSubmit }) => {
                             onChange={handleChange}
                         />
                     </Col>
-                </FormGroup>        
+                </FormGroup>
                 <FormGroup>
                     <Col sm={2}>
                         <FormControl type="submit" className='btn btn-primary' value='Luo' />

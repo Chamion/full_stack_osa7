@@ -55,19 +55,19 @@ class App extends React.Component {
         author: '',
         url: '',
     })
-    this.notify(`blog '${blog.title}' by ${blog.author} added`)
+    this.notify(`blogi '${blog.title}' kirjoittajalta ${blog.author} lisätty`)
   }
 
   logout = () => {
     this.props.logout()
-    this.notify('logged out')
+    this.notify('sinut on kirjattu ulos')
   }
 
     login = async (event) => {
         event.preventDefault()
         try {
             await this.props.login(this.state.username, this.state.password)
-            this.notify('welcome back!')
+            this.notify('Tervetuloa takaisin!')
             this.setState({ username: '', password: ''})
         } catch (exception) {
             this.notify('käyttäjätunnus tai salasana virheellinen', 'error')
@@ -167,7 +167,7 @@ class App extends React.Component {
                         </FormGroup>
                         <FormGroup>
                             <Col sm={2}>
-                                <FormControl type="submit" className='btn btn-primary' value='krijaudu' />
+                                <FormControl type="submit" className='btn btn-primary' value='kirjaudu' />
                             </Col>
                         </FormGroup>
                     </Form>
@@ -180,7 +180,7 @@ class App extends React.Component {
         return (
             <Panel>
                 <Panel.Body>
-                    {this.props.user.name} logged in <button onClick={this.logout} className='btn btn-default'>logout</button>
+                    Olet kirjautunut käyttäjänä {this.props.user.name} <button onClick={this.logout} className='btn btn-default'>kirjaudu ulos</button>
                 </Panel.Body>
             </Panel>
         )
@@ -196,8 +196,8 @@ class App extends React.Component {
                         </Navbar.Brand>
                     </Navbar.Header>
                     <Nav>
-                        <li><Link to='/'>blogs</Link></li>
-                        <li><Link to='/users/'>users</Link></li>
+                        <li><Link to='/'>blogit</Link></li>
+                        <li><Link to='/users/'>käyttäjät</Link></li>
                     </Nav>
                 </div>
             </Navbar>
