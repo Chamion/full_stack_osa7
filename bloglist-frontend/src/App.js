@@ -5,11 +5,12 @@ import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import UsersList from './components/UsersList'
 import UserInfo from './components/UserInfo'
+import BlogInfo from './components/BlogInfo'
 import { showNotification } from './reducers/notificationReducer'
 import { initBlogs, add } from './reducers/blogReducer'
 import { login, logout, resume } from './reducers/userReducer'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 class App extends React.Component {
   constructor(props) {
@@ -116,6 +117,14 @@ class App extends React.Component {
         )
     }
     
+    renderBlogInfo(id) {
+        return (
+            <div>
+                <BlogInfo id={id} />
+            </div>
+        )
+    }
+    
     renderLoginForm() {
         return (
             <div>
@@ -153,6 +162,16 @@ class App extends React.Component {
         )
     }
     
+    renderNav() {
+        return (
+            <nav>
+                <Link to='/'>blogs</Link>
+                <span>  </span>
+                <Link to='/users/'>users</Link>
+            </nav>
+        )
+    }
+    
     render() {
         var userForm
         if (this.props.user === null) {
@@ -160,15 +179,18 @@ class App extends React.Component {
         } else {
             userForm = this.renderLogoutForm()
         }
+        const nav = this.renderNav()
         return (
             <div>
-                <Notification />
-                {userForm}
                 <Router>
                     <div>
+                        {nav}
+                        <Notification />
+                        {userForm}
                         <Route exact path='/' render={() => this.renderHome()} />
                         <Route exact path='/users/' render={() => this.renderUsers()} />
                         <Route path='/users/:id' render={({match}) => this.renderUserInfo(match.params.id)} />
+                        <Route path='/blogs/:id' render={({match}) => this.renderBlogInfo(match.params.id)} />
                     </div>
                 </Router>
             </div>

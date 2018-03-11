@@ -5,19 +5,6 @@ import { like, remove } from '../reducers/blogReducer'
 import { showNotification } from '../reducers/notificationReducer'
 
 class BlogList extends React.Component {
-    removeBlog(blog) {
-        const ok = window.confirm(`remove blog '${blog.title}' by ${blog.author}?`)
-        if ( ok===false) {
-            return
-        }
-        this.props.showNotification(`blog '${blog.title}' by ${blog.author} removed`, 'info', 5)
-        this.props.remove(blog._id)
-    }
-    
-    likeBlog(blog) {
-        this.props.showNotification(`You liked '${blog.title}' by ${blog.author}`, 'info', 5)
-        this.props.like(blog._id)
-    }
     
     render() {
         return (
@@ -27,9 +14,6 @@ class BlogList extends React.Component {
                     <Blog 
                         key={blog._id} 
                         blog={blog} 
-                        like={() => this.likeBlog(blog)}
-                        remove={() => this.removeBlog(blog)}
-                        deletable={blog.user === undefined || blog.user.username === this.props.user.username}
                     />
                 )}
             </div>
