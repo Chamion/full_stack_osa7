@@ -1,6 +1,6 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import usersService from '../services/users'
+import { Link } from 'react-router-dom'
 
 class UsersList extends React.Component {
     constructor() {
@@ -24,8 +24,8 @@ class UsersList extends React.Component {
                 <span>name | blogs added</span>
                 {this.state.users.map(user => {
                     return (
-                        <div>
-                            <span>{user.name}</span>
+                        <div key={user._id}>
+                            <Link to={`/users/${user._id}`}>{user.name}</Link>
                             <span> | </span>
                             <span>{user.blogs.length}</span>
                         </div>
@@ -36,4 +36,4 @@ class UsersList extends React.Component {
     }
 }
 
-export default connect()(UsersList)
+export default UsersList

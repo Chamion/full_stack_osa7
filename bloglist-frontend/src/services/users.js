@@ -11,4 +11,13 @@ const create = async (credentials) => {
     return response.data
 }
 
-export default { getAll, create }
+const getOne = (id) => {
+    const request = axios.get(`${baseUrl}/${id}`)
+    return request.then(response => response.data)
+}
+
+export default {
+    getAll,
+    create,
+    getOne
+}

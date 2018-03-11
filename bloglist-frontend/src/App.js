@@ -4,11 +4,12 @@ import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import UsersList from './components/UsersList'
+import UserInfo from './components/UserInfo'
 import { showNotification } from './reducers/notificationReducer'
 import { initBlogs, add } from './reducers/blogReducer'
 import { login, logout, resume } from './reducers/userReducer'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 class App extends React.Component {
   constructor(props) {
@@ -77,39 +78,12 @@ class App extends React.Component {
         if (this.props.user === null) {
           return (
             <div>
-              <Notification />
-              <h2>Kirjaudu sovellukseen</h2>
-              <form onSubmit={this.login}>
-                <div>
-                  käyttäjätunnus
-                  <input
-                    type="text"
-                    name="username"
-                    value={this.state.username}
-                    onChange={this.handleLoginChange}
-                  />
-                </div>
-                <div>
-                  salasana
-                  <input
-                    type="password"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.handleLoginChange}
-                  />
-                </div>
-                <button type="submit">kirjaudu</button>
-              </form>
             </div>
           )
         }
 
         return (
           <div>
-            <Notification />
-
-            {this.props.user.name} logged in <button onClick={this.logout}>logout</button>
-
             <Togglable buttonLabel='uusi blogi'>
               <BlogForm 
                 handleChange={this.handleLoginChange}
@@ -134,13 +108,67 @@ class App extends React.Component {
         )
     }
     
-    render() {
+    renderUserInfo(id) {
         return (
             <div>
+                <UserInfo id={id} />
+            </div>
+        )
+    }
+    
+    renderLoginForm() {
+        return (
+            <div>
+                <h2>Kirjaudu sovellukseen</h2>
+                <form onSubmit={this.login}>
+                    <div>
+                        käyttäjätunnus
+                        <input
+                        type="text"
+                        name="username"
+                        value={this.state.username}
+                        onChange={this.handleLoginChange}
+                        />
+                    </div>
+                    <div>
+                        salasana
+                        <input
+                        type="password"
+                        name="password"
+                        value={this.state.password}
+                        onChange={this.handleLoginChange}
+                        />
+                    </div>
+                    <button type="submit">kirjaudu</button>
+                </form>
+            </div>
+        )
+    }
+    
+    renderLogoutForm() {
+        return (
+            <div>
+                {this.props.user.name} logged in <button onClick={this.logout}>logout</button>
+            </div>
+        )
+    }
+    
+    render() {
+        var userForm
+        if (this.props.user === null) {
+            userForm = this.renderLoginForm()
+        } else {
+            userForm = this.renderLogoutForm()
+        }
+        return (
+            <div>
+                <Notification />
+                {userForm}
                 <Router>
                     <div>
                         <Route exact path='/' render={() => this.renderHome()} />
                         <Route exact path='/users/' render={() => this.renderUsers()} />
+                        <Route path='/users/:id' render={({match}) => this.renderUserInfo(match.params.id)} />
                     </div>
                 </Router>
             </div>
