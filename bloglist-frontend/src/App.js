@@ -3,10 +3,12 @@ import BlogList from './components/BlogList'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
+import UsersList from './components/UsersList'
 import { showNotification } from './reducers/notificationReducer'
 import { initBlogs, add } from './reducers/blogReducer'
 import { login, logout, resume } from './reducers/userReducer'
 import { connect } from 'react-redux'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 class App extends React.Component {
   constructor(props) {
@@ -71,57 +73,79 @@ class App extends React.Component {
     this.setState({ [event.target.name]: event.target.value })
   }
 
-  render() {
-    if (this.props.user === null) {
-      return (
-        <div>
-          <Notification />
-          <h2>Kirjaudu sovellukseen</h2>
-          <form onSubmit={this.login}>
+    renderHome() {
+        if (this.props.user === null) {
+          return (
             <div>
-              käyttäjätunnus
-              <input
-                type="text"
-                name="username"
-                value={this.state.username}
-                onChange={this.handleLoginChange}
-              />
+              <Notification />
+              <h2>Kirjaudu sovellukseen</h2>
+              <form onSubmit={this.login}>
+                <div>
+                  käyttäjätunnus
+                  <input
+                    type="text"
+                    name="username"
+                    value={this.state.username}
+                    onChange={this.handleLoginChange}
+                  />
+                </div>
+                <div>
+                  salasana
+                  <input
+                    type="password"
+                    name="password"
+                    value={this.state.password}
+                    onChange={this.handleLoginChange}
+                  />
+                </div>
+                <button type="submit">kirjaudu</button>
+              </form>
             </div>
-            <div>
-              salasana
-              <input
-                type="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleLoginChange}
+          )
+        }
+
+        return (
+          <div>
+            <Notification />
+
+            {this.props.user.name} logged in <button onClick={this.logout}>logout</button>
+
+            <Togglable buttonLabel='uusi blogi'>
+              <BlogForm 
+                handleChange={this.handleLoginChange}
+                title={this.state.title}
+                author={this.state.author}
+                url={this.state.url}
+                handleSubmit={this.addBlog}
               />
-            </div>
-            <button type="submit">kirjaudu</button>
-          </form>
-        </div>
-      )
+            </Togglable>
+
+            <BlogList />
+          </div>
+        );
     }
-
-    return (
-      <div>
-        <Notification />
-
-        {this.props.user.name} logged in <button onClick={this.logout}>logout</button>
-
-        <Togglable buttonLabel='uusi blogi'>
-          <BlogForm 
-            handleChange={this.handleLoginChange}
-            title={this.state.title}
-            author={this.state.author}
-            url={this.state.url}
-            handleSubmit={this.addBlog}
-          />
-        </Togglable>
-
-        <BlogList />
-      </div>
-    );
-  }
+    
+    renderUsers() {
+        return (
+            <div>
+                <h1>Bloglist users</h1>
+                <UsersList />
+            </div>
+        )
+    }
+    
+    render() {
+        return (
+            <div>
+                <Router>
+                    <div>
+                        <Route exact path='/' render={() => this.renderHome()} />
+                        <Route exact path='/users/' render={() => this.renderUsers()} />
+                    </div>
+                </Router>
+            </div>
+        )
+    }
 }
 
 const mapStateToProps = (state) => {
