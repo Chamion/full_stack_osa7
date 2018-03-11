@@ -1,4 +1,5 @@
 import React from 'react'
+import { Panel } from 'react-bootstrap'
 
 class Togglable extends React.Component {
   constructor(props) {
@@ -17,15 +18,17 @@ class Togglable extends React.Component {
     const showWhenVisible = { display: this.state.visible ? '' : 'none' }
 
     return (
-      <div>
-        <div style={hideWhenVisible}>
-          <button onClick={this.toggleVisibility}>{this.props.buttonLabel}</button>
-        </div>
-        <div style={showWhenVisible}>
-          {this.props.children}
-          <button onClick={this.toggleVisibility}>cancel</button>
-        </div>
-      </div>
+      <Panel>
+        <Panel.Body>
+            <div style={hideWhenVisible}>
+              <button onClick={this.toggleVisibility} className='btn btn-primary'>{this.props.buttonLabel}</button>
+            </div>
+            <div style={showWhenVisible}>
+              {this.props.children}
+              <button onClick={this.toggleVisibility} className='btn btn-default'>cancel</button>
+            </div>
+        </Panel.Body>
+      </Panel>
     )
   }
 }

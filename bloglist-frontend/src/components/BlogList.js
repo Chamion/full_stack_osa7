@@ -3,20 +3,29 @@ import { connect } from 'react-redux'
 import Blog from './Blog'
 import { like, remove } from '../reducers/blogReducer'
 import { showNotification } from '../reducers/notificationReducer'
+import { Panel, Table } from 'react-bootstrap'
 
 class BlogList extends React.Component {
     
     render() {
         return (
-            <div>
-                <h2>blogs</h2>
-                {this.props.blogs.map(blog => 
-                    <Blog 
-                        key={blog._id} 
-                        blog={blog} 
-                    />
-                )}
-            </div>
+            <Panel>
+                <Panel.Heading>
+                    <h2>blogs</h2>
+                </Panel.Heading>
+                <Panel.Body>
+                    <Table hover>
+                        <tbody>
+                            {this.props.blogs.map(blog => 
+                                <Blog 
+                                    key={blog._id} 
+                                    blog={blog} 
+                                />
+                            )}
+                        </tbody>
+                    </Table>
+                </Panel.Body>
+            </Panel>
         )
     }
 }

@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { comment } from '../reducers/blogReducer'
 import { showNotification } from '../reducers/notificationReducer'
+import {Form, FormGroup} from 'react-bootstrap'
 
 class CommentForm extends React.Component {
     constructor() {
@@ -27,12 +28,13 @@ class CommentForm extends React.Component {
     render() {
         return (
             <div>
-                <h3>Leave a comment</h3>
-                <form onSubmit={this.handleSubmit.bind(this)}>
-                    <textarea name='comment' value={this.state.comment} onChange={this.handleChange.bind(this)} />
-                    <br />
-                    <button type='submit'>comment</button>
-                </form>
+                <h4>Leave a comment</h4>
+                <Form onSubmit={this.handleSubmit.bind(this)}>
+                    <FormGroup>
+                        <textarea name='content' value={this.state.comment} onChange={this.handleChange.bind(this)} className='form-control'></textarea>
+                    </FormGroup>
+                    <button type='submit' className='btn btn-default'>comment</button>
+                </Form>
             </div>
         )
     }

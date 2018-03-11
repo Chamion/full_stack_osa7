@@ -1,5 +1,6 @@
 import React from 'react'
 import usersService from '../services/users'
+import { Panel, Table } from 'react-bootstrap'
 
 class UserInfo extends React.Component {
     constructor(props) {
@@ -24,21 +25,29 @@ class UserInfo extends React.Component {
     
     render() {
         return (
-            <div>
-                <h1>{this.state.user.name}</h1>
-                <div>
-                    <h2>Added blogs</h2>
-                    {this.state.user.blogs.map(blog => {
-                        return (
-                            <div key={blog._id}>
-                                <span>{blog.title}</span>
-                                <span> by </span>
-                                <span>{blog.author}</span>
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
+            <Panel>
+                <Panel.Heading>
+                    <h2>{this.state.user.name}</h2>
+                </Panel.Heading>
+                <Panel.Body>
+                    <h3>Added blogs</h3>
+                    <Table bordered>
+                        <tbody>
+                            {this.state.user.blogs.map(blog => {
+                                return (
+                                    <tr key={blog._id}>
+                                        <td>
+                                            <span>{blog.title}</span>
+                                            <span> by </span>
+                                            <span>{blog.author}</span>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </Table>
+                </Panel.Body>
+            </Panel>
         )
     }
 }

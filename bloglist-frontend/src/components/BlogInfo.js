@@ -5,6 +5,7 @@ import { showNotification } from '../reducers/notificationReducer'
 import { Link } from 'react-router-dom'
 import CommentList from './CommentList'
 import CommentForm from './CommentForm'
+import { Panel } from 'react-bootstrap'
 
 class BlogInfo extends React.Component {
     
@@ -33,7 +34,7 @@ class BlogInfo extends React.Component {
         var deleteButton
         if(this.props.canDelete) {
             deleteButton = (
-                <button onClick={() => this.deleteBlog()}>delete</button>
+                <button onClick={() => this.deleteBlog()} className='btn btn-danger'>delete</button>
             )
         } else {
             var addedBy
@@ -49,15 +50,19 @@ class BlogInfo extends React.Component {
             deleteButton = addedBy
         }
         return (
-            <div>
-                <h1>{this.props.blog.title} {this.props.blog.author}</h1>
-                <p><a href={this.props.blog.url}>{this.props.blog.url}</a></p>
-                <p>{this.props.blog.likes} likes <button onClick={() => this.likeBlog()}>like</button></p>
-                {deleteButton}
-                <h2>comments</h2>
-                <CommentForm id={this.props.blog._id} title={this.props.blog.title} />
-                <CommentList comments={this.props.blog.comments} />
-            </div>
+            <Panel>
+                <Panel.Heading>
+                    <h2>{this.props.blog.title} {this.props.blog.author}</h2>
+                </Panel.Heading>
+                <Panel.Body>
+                    <p><a href={this.props.blog.url}>{this.props.blog.url}</a></p>
+                    <p>{this.props.blog.likes} likes <button onClick={() => this.likeBlog()} className='btn btn-primary'>like <span className='glyphicon glyphicon-thumbs-up'></span></button></p>
+                    {deleteButton}
+                    <h3>comments</h3>
+                    <CommentForm id={this.props.blog._id} title={this.props.blog.title} />
+                    <CommentList comments={this.props.blog.comments} />
+                </Panel.Body>
+            </Panel>
         )
     }
 }
@@ -72,7 +77,7 @@ const mapStateToProps = (state, ownProps) => {
     }
     var canDelete = blog.user === undefined
     if(!canDelete) {
-        if(blog.user.username) {
+        if(blog.user.username && state.user) {
             if(blog.user.username === state.user.username) {
                 canDelete = true
             }

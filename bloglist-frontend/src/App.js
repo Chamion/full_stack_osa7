@@ -11,6 +11,9 @@ import { initBlogs, add } from './reducers/blogReducer'
 import { login, logout, resume } from './reducers/userReducer'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import 'bootstrap3/dist/css/bootstrap.css'
+import 'bootstrap3/dist/css/bootstrap-theme.css'
+import { Navbar, Nav, Panel, Form, FormGroup, ControlLabel, FormControl, Col } from 'react-bootstrap'
 
 class App extends React.Component {
   constructor(props) {
@@ -103,7 +106,6 @@ class App extends React.Component {
     renderUsers() {
         return (
             <div>
-                <h1>Bloglist users</h1>
                 <UsersList />
             </div>
         )
@@ -127,48 +129,78 @@ class App extends React.Component {
     
     renderLoginForm() {
         return (
-            <div>
-                <h2>Kirjaudu sovellukseen</h2>
-                <form onSubmit={this.login}>
-                    <div>
-                        käyttäjätunnus
-                        <input
-                        type="text"
-                        name="username"
-                        value={this.state.username}
-                        onChange={this.handleLoginChange}
-                        />
-                    </div>
-                    <div>
-                        salasana
-                        <input
-                        type="password"
-                        name="password"
-                        value={this.state.password}
-                        onChange={this.handleLoginChange}
-                        />
-                    </div>
-                    <button type="submit">kirjaudu</button>
-                </form>
-            </div>
+            <Panel>
+                <Panel.Heading>
+                    <h2>Kirjaudu sovellukseen</h2>
+                </Panel.Heading>
+                <Panel.Body>
+                    <Form horizontal onSubmit={this.login}>
+                        <FormGroup>
+                            <Col sm={2}>
+                                <ControlLabel>
+                                    käyttäjätunnus
+                                </ControlLabel>
+                            </Col>
+                            <Col sm={10}>
+                                <FormControl
+                                type="text"
+                                name="username"
+                                value={this.state.username}
+                                onChange={this.handleLoginChange}
+                                />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup>
+                            <Col sm={2}>
+                                <ControlLabel>
+                                    salasana
+                                </ControlLabel>
+                            </Col>
+                            <Col sm={10}>
+                                <FormControl
+                                type="password"
+                                name="password"
+                                value={this.state.password}
+                                onChange={this.handleLoginChange}
+                                />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup>
+                            <Col sm={2}>
+                                <FormControl type="submit" className='btn btn-primary' value='krijaudu' />
+                            </Col>
+                        </FormGroup>
+                    </Form>
+                </Panel.Body>
+            </Panel>
         )
     }
     
     renderLogoutForm() {
         return (
-            <div>
-                {this.props.user.name} logged in <button onClick={this.logout}>logout</button>
-            </div>
+            <Panel>
+                <Panel.Body>
+                    {this.props.user.name} logged in <button onClick={this.logout} className='btn btn-default'>logout</button>
+                </Panel.Body>
+            </Panel>
         )
     }
     
     renderNav() {
         return (
-            <nav>
-                <Link to='/'>blogs</Link>
-                <span>  </span>
-                <Link to='/users/'>users</Link>
-            </nav>
+            <Navbar>
+                <div className='container-fluid'>
+                    <Navbar.Header>
+                        <Navbar.Brand>
+                            <h1 style={{margin: 0}}>Blogilista</h1>
+                        </Navbar.Brand>
+                    </Navbar.Header>
+                    <Nav>
+                        <li><Link to='/'>blogs</Link></li>
+                        <li><Link to='/users/'>users</Link></li>
+                    </Nav>
+                </div>
+            </Navbar>
         )
     }
     
